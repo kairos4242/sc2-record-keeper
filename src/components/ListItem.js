@@ -1,9 +1,37 @@
-export default function ListItem({ movie }) {
+import protoss_img from '../images/Protoss.jpg'
+import zerg_img from '../images/Zerg.jpg'
+import terran_img from '../images/Terran.jpg'
+import Race from './Race'
+
+function get_race_image(race) {
+    switch (race) {
+        case Race.TERRAN: return terran_img;
+        case Race.PROTOSS: return protoss_img;
+        case Race.ZERG: return zerg_img;
+    }
+}
+
+function format_num_matches(num_matches) {
+    if (num_matches == 1) {
+        return "1 match"
+    }
+    return num_matches.toString() + " matches"
+}
+
+function format_player_name(player_clan, player_name) {
+    if (player_clan == "") {
+        //no clan so just return name
+        return player_name
+    }
+    return "<" + player_clan + "> " + player_name
+}
+
+export default function ListItem({ player }) {
     return (
       <article className="flex items-start space-x-6 p-6">
-        <img src={movie.image} alt="" width="60" height="88" className="flex-none rounded-md bg-slate-100" />
+        <img src={get_race_image(player.race)} alt="" width="60" height="88" className="flex-none rounded-md bg-slate-100" />
         <div className="min-w-0 relative flex-auto">
-          <h2 className="font-semibold text-slate-900 truncate pr-20">{movie.title}</h2>
+          <h2 className="font-semibold text-slate-900 truncate pr-20">{format_player_name(player.clan, player.name)}</h2>
           <dl className="mt-2 flex flex-wrap text-sm leading-6 font-medium">
             <div className="absolute top-0 right-0 flex items-center space-x-1">
               <dt className="text-sky-500">
@@ -12,15 +40,15 @@ export default function ListItem({ movie }) {
                   <path d="M7.05 3.691c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.372 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.539 1.118l-2.8-2.034a1 1 0 00-1.176 0l-2.8 2.034c-.783.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.363-1.118L.98 9.483c-.784-.57-.381-1.81.587-1.81H5.03a1 1 0 00.95-.69L7.05 3.69z" />
                 </svg>
               </dt>
-              <dd>{movie.starRating}</dd>
+              <dd>{player.starRating}</dd>
             </div>
             <div>
               <dt className="sr-only">Rating</dt>
-              <dd className="px-1.5 ring-1 ring-slate-200 rounded">{movie.rating}</dd>
+              <dd className="px-1.5 ring-1 ring-slate-200 rounded">{player.rating}</dd>
             </div>
             <div className="ml-2">
-              <dt className="sr-only">Year</dt>
-              <dd>{movie.year}</dd>
+              <dt className="sr-only">Number of Matches</dt>
+              <dd>{format_num_matches(player.matches.length)}</dd>
             </div>
             <div>
               <dt className="sr-only">Genre</dt>
@@ -28,7 +56,7 @@ export default function ListItem({ movie }) {
                 <svg width="2" height="2" fill="currentColor" className="mx-2 text-slate-300" aria-hidden="true">
                   <circle cx="1" cy="1" r="1" />
                 </svg>
-                {movie.genre}
+                {player.genre}
               </dd>
             </div>
             <div>
@@ -37,12 +65,12 @@ export default function ListItem({ movie }) {
                 <svg width="2" height="2" fill="currentColor" className="mx-2 text-slate-300" aria-hidden="true">
                   <circle cx="1" cy="1" r="1" />
                 </svg>
-                {movie.runtime}
+                {player.runtime}
               </dd>
             </div>
             <div className="flex-none w-full mt-2 font-normal">
-              <dt className="sr-only">Cast</dt>
-              <dd className="text-slate-400">{movie.cast}</dd>
+              <dt className="sr-only">Notes</dt>
+              <dd className="text-slate-400">{player.notes}</dd>
             </div>
           </dl>
         </div>

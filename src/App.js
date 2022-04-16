@@ -5,6 +5,7 @@ import NavItem from './components/NavItem.js'
 import List from './components/List.js'
 import ListItem from './components/ListItem.js'
 import Race from './components/Race';
+import SearchBar from './components/SearchBar';
 
 const movie1 = {
   title: "Test",
@@ -63,16 +64,33 @@ function checkUrlActive(desired_subpath) {
   return false
 }
 
+const filterPlayers = (player_list, query) => {
+  if (!query) {
+    return player_list
+  }
+
+  return player_list.filter((player) => {
+    const playerName = player.name.toLowerCase();
+    return playerName.includes(query)
+  })
+}
+
 function App() {
+  const {search} = window.location;
+  const query = new URLSearchParams(search).get('s');
+  const filteredPlayers = filterPlayers(players, query)
+
+
   return (
     <div className="divide-y divide-slate-100">
       <Nav>
-        <NavItem href="/matches" isActive={checkUrlActive("matches")}>Matchlist</NavItem>
-        <NavItem href="/stats" isActive={checkUrlActive("stats")}>Coming Soon</NavItem>
-        <NavItem href="/builds" isActive={checkUrlActive("builds")}>Coming Soon</NavItem>
+        <NavItem href="/players" isActive={checkUrlActive("players")}>Players</NavItem>
+        <NavItem href="/stats" isActive={checkUrlActive("stats")}>Stats</NavItem>
+        <NavItem href="/builds" isActive={checkUrlActive("builds")}>Builds</NavItem>
+        <SearchBar />
       </Nav>
       <List>
-        {players.map((player) => (
+        {filteredPlayers.map((player) => (
           <ListItem key={player.id} player={player} />
         ))}
       </List>

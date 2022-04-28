@@ -1,4 +1,4 @@
-const data = `Name,Race,Notes
+export const data = `Name,Race,Notes
 <PSISTM> DaveTesta,P,"Loves DTs, proxy sg, plays cheeky. Can beat him 100% in straight up macro game"
 Cassidy,Z,"12 pool 16 gas baneling bust, 16 pool baneling bust"
 <sBiz> RhyasonTTV,Z,12 pool drone pull

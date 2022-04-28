@@ -1,6 +1,7 @@
 import protoss_img from '../images/Protoss.jpg'
 import zerg_img from '../images/Zerg.jpg'
 import terran_img from '../images/Terran.jpg'
+import random_img from '../images/Random.png'
 import Race from './Race'
 
 function get_race_image(race) {
@@ -8,6 +9,7 @@ function get_race_image(race) {
         case Race.TERRAN: return terran_img;
         case Race.PROTOSS: return protoss_img;
         case Race.ZERG: return zerg_img;
+        case Race.RANDOM: return random_img;
     }
 }
 

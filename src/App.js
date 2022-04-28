@@ -6,6 +6,7 @@ import ListItem from './components/ListItem.js'
 import Race from './components/Race';
 import SearchBar from './components/SearchBar';
 import AddDataButton from './components/AddDataButton';
+import Modal from './components/Modal';
 import { parse } from '@vanillaes/csv'
 import { data } from './data/Data'
 
@@ -120,7 +121,7 @@ function App() {
         <NavItem href="/stats" isActive={checkUrlActive("stats")}>Stats</NavItem>
         <NavItem href="/builds" isActive={checkUrlActive("builds")}>Builds</NavItem>
         <SearchBar />
-        <AddDataButton />
+        <AddDataButton/>
       </Nav>
       <List>
         {filteredPlayers.map((player) => (

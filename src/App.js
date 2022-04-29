@@ -6,7 +6,6 @@ import ListItem from './components/ListItem.js'
 import Race from './components/Race';
 import SearchBar from './components/SearchBar';
 import AddDataButton from './components/AddDataButton';
-import Modal from './components/Modal';
 import { parse } from '@vanillaes/csv'
 import { data } from './data/Data'
 

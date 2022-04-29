@@ -8,6 +8,7 @@ import SearchBar from './components/SearchBar';
 import AddDataButton from './components/AddDataButton';
 import { parse } from '@vanillaes/csv'
 import { data } from './data/Data'
+import { useCallback, useState } from 'react';
 
 const player_model1 = {
   id: 0,
@@ -58,12 +59,12 @@ const filterPlayers = (player_list, query) => {
 
 function App() {  
   const parsedData = parse(data)
-  let properData = []
   let player_clan = ""
   let player_name = ""
   let player_race = ""
   let player_notes = ""
-  
+  const dataBeforeState = []
+
   parsedData.forEach(player => {
     if (player[1] == "Race") {
       return;
@@ -77,7 +78,7 @@ function App() {
       player_clan = ""
       player_name = player[0]
     }
-    console.log(player[1])
+    //console.log(player[1])
     switch (player[1]) {
       case "T": player_race = Race.TERRAN;
       break;
@@ -90,7 +91,7 @@ function App() {
       default: break;
     }
     player_notes = player[2]
-    console.log(player_race)
+    //console.log(player_race)
 
 
     
@@ -103,15 +104,24 @@ function App() {
       notes: player_notes
     }
 
-    properData.push(playerObject)
+    dataBeforeState.push(playerObject)
+    
+    //properData.push(playerObject)
   })
-
-  properData.push(player_model1)
-  properData.push(player_model2)
+  //properData.push(player_model1)
+  //properData.push(player_model2)
+  const [properData, setProperData] = useState(dataBeforeState)
 
   const {search} = window.location;
   const query = new URLSearchParams(search).get('s');
   const filteredPlayers = filterPlayers(properData, query)
+
+  const handleAddDataCallback = (childData) =>{
+    const dataBeforeState = properData.concat([childData])
+    dataBeforeState.forEach(player => console.log("new: " + player.name))
+    setProperData(dataBeforeState)
+    properData.forEach(player => console.log("final: " + player.name))
+}
 
   return (
     <div className="divide-y divide-slate-100">
@@ -120,7 +130,7 @@ function App() {
         <NavItem href="/stats" isActive={checkUrlActive("stats")}>Stats</NavItem>
         <NavItem href="/builds" isActive={checkUrlActive("builds")}>Builds</NavItem>
         <SearchBar />
-        <AddDataButton/>
+        <AddDataButton parentCallback={handleAddDataCallback}/>
       </Nav>
       <List>
         {filteredPlayers.map((player) => (

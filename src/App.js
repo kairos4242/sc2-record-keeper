@@ -92,8 +92,6 @@ function App() {
     }
     player_notes = player[2]
     //console.log(player_race)
-
-
     
     let playerObject = {
       id: 0,
@@ -105,22 +103,18 @@ function App() {
     }
 
     dataBeforeState.push(playerObject)
-    
-    //properData.push(playerObject)
   })
-  //properData.push(player_model1)
-  //properData.push(player_model2)
-  const [properData, setProperData] = useState(dataBeforeState)
+  const [stateData, setStateData] = useState(dataBeforeState)
 
   const {search} = window.location;
   const query = new URLSearchParams(search).get('s');
-  const filteredPlayers = filterPlayers(properData, query)
+  const filteredPlayers = filterPlayers(stateData, query)
 
   const handleAddDataCallback = (childData) =>{
-    const dataBeforeState = properData.concat([childData])
+    const dataBeforeState = stateData.concat([childData])
     dataBeforeState.forEach(player => console.log("new: " + player.name))
-    setProperData(dataBeforeState)
-    properData.forEach(player => console.log("final: " + player.name))
+    setStateData(dataBeforeState)
+    stateData.forEach(player => console.log("final: " + player.name))
 }
 
   return (
